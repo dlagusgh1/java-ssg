@@ -1,0 +1,161 @@
+<!-- 상단 헤드 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사이트</title>
+    <style>
+        body,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .menu-1 {
+            text-align: center;
+        }
+
+        .menu-1>ul {
+            padding: 0 10px;
+        }
+
+        .menu-1>ul>li {
+            display: inline-block;
+        }
+
+        .menu-1 ul>li>a {
+            display: block;
+            padding: 20px;
+            color: white;
+        }
+
+        .menu-1 ul>li:hover>a {
+            background-color: black;
+            color: white;
+        }
+
+        .menu-1 ul>li:hover>ul {
+            display: block;
+        }
+
+        /* 메뉴 색상 넣기 */
+        .menu-1 ul {
+            background-color: #1b5ac2;
+        }
+
+        /* 서브 메뉴 */
+        .menu-1>ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+        }
+
+        /* 메뉴 아이템 */
+        .menu-1 ul>li {
+            position: relative;
+        }
+        /* 검색 관련 */
+        .input-box {
+            text-align: right;
+            padding: 20px;
+        }
+        button {
+            background-color: #1b5ac2;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="input-box">
+        <input type="text" placeholder="검색어 입력">
+        <button>검색</button>
+    </div>
+
+    <nav class="menu-1">
+        <ul>
+            <li><a href="main.html">홈</a></li>
+            <li><a href="#">게시판 목록</a>
+                <ul>
+                    <li><a href="notice-list-1.html">공지사항</a></li>
+                    <li><a href="free-list-1.html">자유 게시판</a></li>
+                </ul>
+            </li>
+            <li><a href="#">개발자 블로그</a>
+                <ul>
+                    <li><a href="https://dlagusgh1.tistory.com/" target="_blank">개발자1</a></li>
+                    <li><a href="https://x1235.tistory.com/" target="_blank">개발자2</a></li>
+                </ul>
+            </li>
+            <li><a href="#">통계</a></li>
+            <li><a href="login.html">로그인</a></li>
+        </ul>
+    </nav>
+<style>
+    /* 로그인 관련 */
+    .login-box {
+        text-align: center;
+        padding: 50px;
+    }
+    form {
+        display: inline-block;
+    }
+    .login-box > form > fieldset > button {
+        margin: 10px 0;
+    }
+
+</style>
+    <nav class="login-box">
+        <form method="post" id="authForm" action="https://www.tistory.com/auth/login">
+            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
+            <fieldset>
+                <legend class="screen_out">로그인 정보 입력폼</legend>
+                <div class="box_login">
+                    <div class="inp_text">
+                        <label for="loginId" class="screen_out">아이디</label>
+                        <input type="email" id="loginId" name="loginId" placeholder="ID" >
+                    </div>
+                    <div class="inp_text">
+                        <label for="loginPw" class="screen_out">비밀번호</label>
+                        <input type="password" id="loginPw" name="password" placeholder="Password" >
+                    </div>
+                </div>
+                <button type="submit" class="btn_login"  disabled>로그인</button>
+                <div class="login_append">
+                <div class="inp_chk"> <!-- 체크시 checked 추가 -->
+                    <input type="checkbox" id="keepLogin" class="inp_radio"  name="keepLogin">
+                    <label for="keepLogin" class="lab_g">
+                        <span class="img_top ico_check"></span>
+                        <span class="txt_lab">로그인 상태 유지</span>
+                    </label>
+                </div>
+                <span class="txt_find">
+                    <a href="#" class="link_find">아이디</a>
+                    / 
+                    <a href="#" class="link_find">비밀번호 찾기</a>
+                    </span>
+                </div>       
+            </fieldset>
+        </form>
+    </nav> 
+    <tbody>
+        
+    </tbody>
+</body>
+</head>
