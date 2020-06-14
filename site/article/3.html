@@ -111,50 +111,38 @@
     </nav>
 <style>
     h2 {
+        text-align: center;
         padding: 100px 0 25px 0;
     }
-    .table {
-        width: 25%;
-        margin: 0 37.5%;
+
+    table {
+        text-align: center;
+        margin: auto;
         border-collapse: collapse;
         border-top: 3px solid #168;
-        padding: 100px;
     }
-    .table th {
+
+    table>thead>tr>td {
+        padding: 5px 93px;
+    }
+
+    table>thead>tr>.td1 {
         color: #168;
         background: #f0f6f9;
         text-align: center;
     }
-    .table th, .table td {
-        padding: 10px;
+
+    table>tr,
+    td {
         border: 1px solid #ddd;
     }
-    .table th:first-child, .table td:first-child {
-      border-left: 0;
-    }
-    .table th:last-child, .table td:last-child {
-      border-right: 0;
-    }
-    .table tr td:first-child{
-      text-align: center;
-    }
-    tbody {
-        text-align: center;
-    }
-    
 
 </style>
 <table class="table">
     <thead>
-        <tr>
-            <th>No.</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
     </thead>
     <tbody>
-        <h2>자유 게시판</h2><tr><td>2</td><td><a href="2.html">aa</a></td><td>관리자</td><td>2020-06-14 19:02:31</td></tr><tr><td>4</td><td><a href="4.html">bbbb</a></td><td>관리자</td><td>2020-06-14 22:05:07</td></tr><tr><td>6</td><td><a href="6.html">bbbbbbbbbbb</a></td><td>관리자</td><td>2020-06-14 22:05:18</td></tr>
+        <h2 class="t1-h">상세보기</h2><table border=1><thead><tr><td class="td1" colspan=4>게시물 상세보기</td></tr><tr><td class="td1">제목</td><td colspan=3>aaaa</td></tr></tr><td class="td1">내용</td><td colspan=3>aaaa</td></tr><tr><td class="td1"><a href="2.html">이전글</a></td><td class="td1"><a href="4.html">다음글</a></td></tr>
     </tbody>
 </table>
 </body>

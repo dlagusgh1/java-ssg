@@ -433,11 +433,16 @@ class BuildController extends Controller {
 			actionSite(reqeust);
 			actionCreatMain();
 			actionCreatLogin();
+			actionCreatStatistics();
 		} else if (reqeust.getActionName().equals("startAutoSite")) {
 			actionAutoSite(true);
 		} else if (reqeust.getActionName().equals("stopAutoSite")) {
 			actionAutoSite(false);
 		}
+	}
+
+	private void actionCreatStatistics() {
+		buildService.CreatStatistics();
 	}
 
 	void actionAutoSite(boolean workstarted) {
@@ -566,9 +571,48 @@ class MemberController extends Controller {
 // Servicee
 class BuildService {
 	ArticleService articleService;
+	MemberService memberService;
 
 	BuildService() {
 		articleService = Factory.getArticleService();
+		memberService = Factory.getMemberService();
+	}
+
+	public void CreatStatistics() {
+
+		Util.makeDir("site");
+		Util.makeDir("site/article");
+		String head = Util.getFileContents("site_template/part/head.html");
+		String foot = Util.getFileContents("site_template/part/foot.html");
+
+		String fileName = "Statistics.html";
+
+		String html = "";
+
+		String template = Util.getFileContents("site_template/article/Statistics.html");
+		
+		List<Article> articles = articleService.getArticles();
+
+		html += "<h2 class=\"t1-h\">통계</h2>";
+		html += "<table border=1>";
+		html += "<thead>";
+		html += "<tr>";
+		html += "<td class=\"td1\" colspan=4>사이트 통계</td>";
+		html += "</tr>";
+		html += "<tr>";
+		html += "<td class=\"td1\">회원 수</td>";
+		html += "<td colspan=3>" + memberService.getLastMemberId() + "</td>";
+		html += "</tr>";
+		html += "</tr>";
+		html += "<td class=\"td1\">게시물 수</td>";
+		html += "<td colspan=3>" + articleService.getLastArticleId() + "</td>";
+		html += "</tr>";
+
+		html = template.replace("${TR}", html);
+
+		html = head + html + foot;
+
+		Util.writeFileContents("site/article/" + fileName, html);
 	}
 
 	public void creatLogin() {
@@ -709,6 +753,10 @@ class ArticleService {
 		articleDao = Factory.getArticleDao();
 	}
 
+	public String getLastArticleId() {
+		return articleDao.getLastArticleId();
+	}
+
 	public List<Article> getArticlesByBoardCode(String code) {
 		return articleDao.getArticlesByBoardCode(code);
 
@@ -763,6 +811,10 @@ class MemberService {
 		memberDao = Factory.getMemberDao();
 	}
 
+	public String getLastMemberId() {
+		return memberDao.getLastMemberId();
+	}
+
 	public Member getMemberByLoginIdAndLoginPw(String loginId, String loginPw) {
 		return memberDao.getMemberByLoginIdAndLoginPw(loginId, loginPw);
 	}
@@ -789,6 +841,10 @@ class ArticleDao {
 
 	ArticleDao() {
 		db = Factory.getDB();
+	}
+
+	public String getLastArticleId() {
+		return db.getLastArticleId();
 	}
 
 	public List<Article> getArticlesByBoardCode(String code) {
@@ -841,6 +897,10 @@ class MemberDao {
 		db = Factory.getDB();
 	}
 
+	public String getLastMemberId() {
+		return db.getLastMemberId();
+	}
+
 	public Member getMemberByLoginIdAndLoginPw(String loginId, String loginPw) {
 		return db.getMemberByLoginIdAndLoginPw(loginId, loginPw);
 	}
@@ -871,6 +931,14 @@ class DB {
 		tables.put("article", new Table<Article>(Article.class, dbDirPath));
 		tables.put("board", new Table<Board>(Board.class, dbDirPath));
 		tables.put("member", new Table<Member>(Member.class, dbDirPath));
+	}
+
+	public String getLastArticleId() {
+		return tables.get("article").getLastArticleId();
+	}
+
+	public String getLastMemberId() {
+		return tables.get("member").getLastMemberId();
 	}
 
 	public List<Article> getArticlesByBoardCode(String code) {
@@ -1008,6 +1076,15 @@ class Table<T> {
 		this.tableDirPath = dbDirPath + "/" + this.tableName;
 
 		Util.makeDir(tableDirPath);
+	}
+
+	public String getLastArticleId() {
+		return Util.getFileContents("db/article/lastId.txt");
+	}
+
+	public String getLastMemberId() {
+		String lastId = "" + getLastId();
+		return lastId;
 	}
 
 	public void modify(String title, String body, Article article) {
