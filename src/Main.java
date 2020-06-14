@@ -614,7 +614,7 @@ class BuildService {
 
 	}
 
-	// bulid site 명령어를 통해 html 생성.
+	// bulid site 명령어를 통해 html 생성.d
 	public void buildSite() {
 
 		Util.makeDir("site");
