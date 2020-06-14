@@ -110,54 +110,40 @@
         </ul>
     </nav>
 <style>
-    /* 로그인 관련 */
-    .login-box {
+    h2 {
         text-align: center;
-        padding: 100px;
+        padding: 100px 0 25px 0;
     }
-    form {
-        display: inline-block;
+
+    table {
+        text-align: center;
+        margin: auto;
+        border-collapse: collapse;
+        border-top: 3px solid #168;
     }
-    .login-box > form > fieldset > button {
-        margin: 10px 0;
+
+    table>thead>tr>td {
+        padding: 5px 93px;
+    }
+
+    table>thead>tr>.td1 {
+        color: #168;
+        background: #f0f6f9;
+        text-align: center;
+    }
+
+    table>tr,
+    td {
+        border: 1px solid #ddd;
     }
 
 </style>
-    <nav class="login-box">
-        <form method="post" id="authForm" action="https://www.tistory.com/auth/login">
-            <input type="hidden" name="redirectUrl" value="https://blogpack.tistory.com/manage">
-            <fieldset>
-                <legend class="screen_out">로그인 정보 입력폼</legend>
-                <div class="box_login">
-                    <div class="inp_text">
-                        <label for="loginId" class="screen_out">아이디</label>
-                        <input type="email" id="loginId" name="loginId" placeholder="ID" >
-                    </div>
-                    <div class="inp_text">
-                        <label for="loginPw" class="screen_out">비밀번호</label>
-                        <input type="password" id="loginPw" name="password" placeholder="Password" >
-                    </div>
-                </div>
-                <button type="submit" class="btn_login"  disabled>로그인</button>
-                <div class="login_append">
-                <div class="inp_chk"> <!-- 체크시 checked 추가 -->
-                    <input type="checkbox" id="keepLogin" class="inp_radio"  name="keepLogin">
-                    <label for="keepLogin" class="lab_g">
-                        <span class="img_top ico_check"></span>
-                        <span class="txt_lab">로그인 상태 유지</span>
-                    </label>
-                </div>
-                <span class="txt_find">
-                    <a href="#" class="link_find">아이디</a>
-                    / 
-                    <a href="#" class="link_find">비밀번호 찾기</a>
-                    </span>
-                </div>       
-            </fieldset>
-        </form>
-    </nav> 
+<table class="table">
+    <thead>
+    </thead>
     <tbody>
-        
+        <h2 class="t1-h">상세보기</h2><table border=1><thead><tr><td class="td1" colspan=4>게시물 상세보기</td></tr><tr><td class="td1">제목</td><td colspan=3>aa</td></tr></tr><td class="td1">내용</td><td colspan=3>aa</td></tr><tr><td class="td1"><a href="1.html">이전글</a></td><td class="td1"><a href="3.html">다음글</a></td></tr>
     </tbody>
+</table>
 </body>
 </head>

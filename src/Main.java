@@ -602,8 +602,8 @@ class BuildService {
 
 		String template = Util.getFileContents("site_template/article/main.html");
 
-		html += "<style> .main-box {text-align: center; margin-top:50px}";
-		html += ".main-box > img{width: 800px; border-radus: 50px}</style>";
+		html += "<style> .main-box {text-align: center; padding: 100px;}";
+		html += ".main-box > img{width: 800px; border-radius: 50px;}</style>";
 
 		html += "<nav class=\"main-box\">";
 		html += "<img src=\"main\\images\\main1.jpg\" alt=\"\"></nav>";
