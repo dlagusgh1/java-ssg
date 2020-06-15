@@ -470,9 +470,9 @@ class BuildController extends Controller {
 				actionCreatLogin();
 				actionCreatStatistics();
 			}
-		} else if (reqeust.getActionName().equals("startAutoSite")) {
+		} else if (reqeust.getActionName().equals("start")) {
 			actionAutoSite(true);
-		} else if (reqeust.getActionName().equals("stopAutoSite")) {
+		} else if (reqeust.getActionName().equals("stop")) {
 			actionAutoSite(false);
 		}
 	}
@@ -1461,21 +1461,17 @@ class Util {
 	public static void startAutoSite(boolean workstarted) {
 		new Thread(() -> {
 			while (workstarted) {
-				System.out.println(workstarted);
-				if (workstarted) {
-					try {
-						System.out.println("AutoSite 실행 중");
-						Factory.getBuildService().buildSite();
-						Thread.sleep(10000); // 10초 딜레이
-					} catch (InterruptedException e) {
-					}
-				} else if (workstarted == false) {
-					System.out.println("AutoSite 종료");
-					System.out.println(workstarted);
-					break;
+				try {
+					System.out.println("AutoSite 실행 중");
+					Factory.getBuildService().buildSite();
+					Thread.sleep(10000); // 10초 딜레이
+				} catch (InterruptedException e) {
 				}
 			}
 		}).start();
+		if (workstarted == false) {
+			Thread.interrupted();
+		}
 	}
 
 // 현재날짜문장
