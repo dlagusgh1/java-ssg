@@ -298,17 +298,45 @@ class ArticleController extends Controller {
 	}
 
 	public void doAction(Request reqeust) {
-		if (reqeust.getActionName().equals("list")) {
-			actionList(reqeust);
-		} else if (reqeust.getActionName().equals("write")) {
+		if (reqeust.getActionName().equals("write")) {
 			actionWrite(reqeust, reqeust.getArg1());
 		} else if (reqeust.getActionName().equals("modify")) {
 			actionModify(reqeust, reqeust.getArg1());
 		} else if (reqeust.getActionName().equals("delete")) {
 			actionDelete(reqeust, reqeust.getArg1());
+		} else if (reqeust.getActionName().equals("list")) {
+			actionList(reqeust);
+		} else if (reqeust.getActionName().equals("detail")) {
+			actionDetail(reqeust, reqeust.getArg1());
 		}
 	}
 
+	// 게시물 상세보기
+	private void actionDetail(Request reqeust, String arg1) {
+		
+		String filePath = "db\\article\\" + arg1 + ".json";
+
+		int id = Integer.parseInt(arg1);
+		
+		Article article = Factory.getArticleService().getArticlebyId(id);
+		
+			if (Util.isFileExists(filePath) && article.getId() == id ) {
+				try {
+					System.out.println("게시물 번호 : " + article.getId());
+					System.out.println("제목 : " + article.getTitle());
+					System.out.println("내용 : " + article.getBody());
+					System.out.println("작성일자 : " + article.getRegDate());
+				} catch(Exception e) {
+					
+				}
+				
+			} else {
+				System.out.println("해당 파일이 존재하지 않습니다.");
+			}
+		
+	}
+	
+	// 게시물 삭제
 	private void actionDelete(Request reqeust, String arg1) {
 
 		if (Factory.getSession().getLoginedMember() == null) {
@@ -323,7 +351,8 @@ class ArticleController extends Controller {
 			}
 		}
 	}
-
+	
+	// 게시물 리스트
 	private void actionList(Request reqeust) {
 		List<Article> articles = articleService.getArticles();
 		if (articles.size() != 0) {
@@ -339,6 +368,7 @@ class ArticleController extends Controller {
 
 	}
 
+	// 게시물 수정
 	private void actionModify(Request reqeust, String arg1) {
 
 		if (Factory.getSession().getLoginedMember() == null) {
@@ -368,6 +398,8 @@ class ArticleController extends Controller {
 		}
 	}
 
+	
+	// 게시물 작성
 	private void actionWrite(Request reqeust, String arg1) {
 
 		String title;
@@ -430,10 +462,14 @@ class BuildController extends Controller {
 	@Override
 	void doAction(Request reqeust) {
 		if (reqeust.getActionName().equals("site")) {
-			actionSite(reqeust);
-			actionCreatMain();
-			actionCreatLogin();
-			actionCreatStatistics();
+			if ( Factory.getSession().getLoginedMember() == null ) {
+				System.out.println("로그인이 필요합니다.");
+			} else {
+				actionSite(reqeust);
+				actionCreatMain();
+				actionCreatLogin();
+				actionCreatStatistics();
+			}
 		} else if (reqeust.getActionName().equals("startAutoSite")) {
 			actionAutoSite(true);
 		} else if (reqeust.getActionName().equals("stopAutoSite")) {
@@ -568,7 +604,7 @@ class MemberController extends Controller {
 	}
 }
 
-// Servicee
+// Service
 class BuildService {
 	ArticleService articleService;
 	MemberService memberService;
@@ -720,12 +756,20 @@ class BuildService {
 			html += "<td class=\"td1\" colspan=4>게시물 상세보기</td>";
 			html += "</tr>";
 			html += "<tr>";
+			html += "<td class=\"td1\">게시물 번호</td>";
+			html += "<td colspan=3>" + article.getId() + "</td>";
+			html += "</tr>";
+			html += "<tr>";
 			html += "<td class=\"td1\">제목</td>";
 			html += "<td colspan=3>" + article.getTitle() + "</td>";
 			html += "</tr>";
 			html += "</tr>";
 			html += "<td class=\"td1\">내용</td>";
 			html += "<td colspan=3>" + article.getBody() + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<td class=\"td1\">작성일자</td>";
+			html += "<td colspan=3>" + article.getRegDate() + "</td>";
 			html += "</tr>";
 			html += "<tr>";
 			html += "<td class=\"td1\"><a href=\"" + (article.getId() - 1) + ".html\">이전글</a></td>";
