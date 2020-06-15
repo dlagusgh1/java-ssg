@@ -11,7 +11,7 @@
 // 3. article modify 게시물 번호 : 게시물 수정 기능
 // 4. article list : 게시물 리스팅 기능(구분없이)
 // 4-1. article list 게시판 번호 : 미 구현
-// 5. article detail 게시물 번호 : 미 구현
+// 5. article detail 게시물 번호 : 게시물 상세보기 기능
 //
 // site 기능
 // 1. build site : html 파일 생성(수동)
@@ -615,6 +615,9 @@ class BuildService {
 	}
 
 	public void CreatStatistics() {
+		
+		int noticeCount = 0;
+		int freeCount = 0;
 
 		Util.makeDir("site");
 		Util.makeDir("site/article");
@@ -628,20 +631,33 @@ class BuildService {
 		String template = Util.getFileContents("site_template/article/Statistics.html");
 		
 		List<Article> articles = articleService.getArticles();
+		
+		for (Article article : articles) {
+			if ( article.getBoardId() == 1 ) {
+				noticeCount += 1;
+			} else if ( article.getBoardId() == 2 ) {
+				freeCount += 1;
+			}
+		}
 
-		html += "<h2 class=\"t1-h\">통계</h2>";
+		html += "<h2 class=\"t1-h\">사이트 통계</h2>";
 		html += "<table border=1>";
 		html += "<thead>";
-		html += "<tr>";
-		html += "<td class=\"td1\" colspan=4>사이트 통계</td>";
-		html += "</tr>";
 		html += "<tr>";
 		html += "<td class=\"td1\">회원 수</td>";
 		html += "<td colspan=3>" + memberService.getLastMemberId() + "</td>";
 		html += "</tr>";
-		html += "</tr>";
-		html += "<td class=\"td1\">게시물 수</td>";
+		html += "<tr>";
+		html += "<td class=\"td1\">전체 게시물 수</td>";
 		html += "<td colspan=3>" + articleService.getLastArticleId() + "</td>";
+		html += "</tr>";
+		html += "<tr>";
+		html += "<td class=\"td1\">공지사항 게시물 수</td>";
+		html += "<td colspan=3>" + noticeCount + "</td>";
+		html += "</tr>";
+		html += "<tr>";
+		html += "<td class=\"td1\">자유게시판 게시물 수</td>";
+		html += "<td colspan=3>" + freeCount  + "</td>";
 		html += "</tr>";
 
 		html = template.replace("${TR}", html);
@@ -1294,6 +1310,7 @@ class Article extends Dto {
 	private int memberId;
 	private String title;
 	private String body;
+	private int viewCount;
 
 	public Article() {
 
