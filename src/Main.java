@@ -305,7 +305,7 @@ class ArticleController extends Controller {
 		} else if (reqeust.getActionName().equals("delete")) {
 			actionDelete(reqeust, reqeust.getArg1());
 		} else if (reqeust.getActionName().equals("list")) {
-			actionList(reqeust);
+			actionList(reqeust, reqeust.getArg1());
 		} else if (reqeust.getActionName().equals("detail")) {
 			actionDetail(reqeust, reqeust.getArg1());
 		}
@@ -353,17 +353,27 @@ class ArticleController extends Controller {
 	}
 	
 	// 게시물 리스트
-	private void actionList(Request reqeust) {
-		List<Article> articles = articleService.getArticles();
-		if (articles.size() != 0) {
-			System.out.println("번호 | 제목 | 작성 날짜");
-			for (int i = 0; i < articles.size(); i++) {
+	private void actionList(Request reqeust, String arg1) {
+		List<Board> boards = articleService.getBoards();
 
-				Article a = articles.get(i);
-				System.out.printf("%d | %s | %s \n", a.getId(), a.getTitle(), a.getRegDate());
+		for (Board board : boards) {
+			List<Article> articles = articleService.getArticlesByBoardCode(board.getCode());
+			if ( arg1.equals("1")) {
+				if (board.getCode().equals("notice")) {
+					System.out.println("번호 | 제목 | 작성 날짜");
+					for (Article article : articles) {
+						System.out.println(article.getId() + " | " + article.getTitle() + " | " + article.getRegDate());
+					}
+				}
+			} else if ( arg1.equals("2")) {
+				if (board.getCode().equals("free")) {
+					System.out.println("번호 | 제목 | 작성 날짜");
+					for (Article article : articles) {
+						System.out.println(article.getId() + " | " + article.getTitle() + " | " + article.getRegDate());
+					}
+				}
 			}
-		} else {
-			System.out.println("게시물이 존재하지 않습니다.");
+			
 		}
 
 	}
