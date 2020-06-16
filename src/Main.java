@@ -48,7 +48,14 @@ class Main {
 		DBConnection dbConn = new DBConnection();
 
 		dbConn.connect();
+		
+		// 게시물 추가
 		dbConn.insert("INSERT INTO article SET regDate = NOW(), title = '제목1', `body` = '내용1';");
+		
+		// 게시물 수정
+		dbConn.update("UPDATE article SET title = '수정된 제목 1' WHERE id = 1");
+		
+		
 		dbConn.close();
 		
 		App app = new App();
@@ -1683,4 +1690,29 @@ class DBConnection {
 		return id;
 	}
 	
+	// 게시물 수정
+	public int update(String sql) {
+		// UPDATE 명령으로 몇개의 데이터가 수정되었는지
+		int affectedRows = 0;
+
+		// SQL을 적는 문서파일
+		Statement statement = null;
+
+		try {
+			statement = connection.createStatement();
+			affectedRows = statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			System.err.printf("[UPDATE 쿼리 오류, %s]\n" + e.getStackTrace() + "\n", sql);
+		}
+
+		try {
+			if (statement != null) {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			System.err.println("[UPDATE 종료 오류]\n" + e.getStackTrace());
+		}
+
+		return affectedRows;
+	}
 }
